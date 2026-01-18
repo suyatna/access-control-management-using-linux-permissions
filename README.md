@@ -23,7 +23,7 @@ Pembahasan berdasarkan materi dari program Google Cybersecurity Professional Cer
 
 ## 📝 Scenario context <a name="scenario">
 
-kenario ini menempatkan saya sebagai profesional keamanan di sebuah organisasi berskala besar yang mendukung aktivitas tim riset. Lingkungan kerja tersebut menyimpan banyak file dan direktori penting berisi data internal. Pengaturan hak akses menjadi bagian penting untuk menjaga sistem tetap aman dan tertata.
+Skenario ini menempatkan saya sebagai profesional keamanan di sebuah organisasi berskala besar yang mendukung aktivitas tim riset. Lingkungan kerja tersebut menyimpan banyak file dan direktori penting berisi data internal. Pengaturan hak akses menjadi bagian penting untuk menjaga sistem tetap aman dan tertata.
 
 Peran utama saya berfokus pada peninjauan izin file dan direktori yang sudah ada. Setiap akses diperiksa agar sesuai dengan otoritas pengguna. Perhatian khusus diberikan pada izin yang terlalu longgar, akses tulis yang tidak semestinya, serta risiko keamanan akibat konfigurasi perizinan yang keliru.
 
