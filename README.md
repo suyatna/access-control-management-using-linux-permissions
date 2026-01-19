@@ -9,7 +9,7 @@
 5. [Modifying file permissions](#modify)
 6. [Managing permissions on hidden files](#managing)
 7. [Securing directory access](#securing)
-8. [Conclusion](#conclusion)
+8. [Project summary](#summary)
 
 ---
 
@@ -166,3 +166,11 @@ Hanya pengguna `researcher2` yang seharusnya dapat mengakses direktori drafts. I
 Direktori `drafts` kini hanya dapat diakses oleh pemilik, sedangkan group dan other tidak memiliki izin masuk atau melihat isinya. Konfigurasi ini melindungi dokumen sensitif dari akses tidak sah dan memperkuat kontrol akses berbasis peran di sistem. Langkah pengamanan direktori ini melengkapi pengaturan izin pada file dan file tersembunyi, sehingga seluruh struktur proyek kini sesuai dengan kebijakan keamanan organisasi.
 
 ---
+
+## 💡 Project summary <a name="summary">
+
+Proyek ini menampilkan bagaimana kontrol akses di sistem operasi dapat diterapkan lewat pengelolaan izin file dan direktori di Linux. Skenario yang digunakan berfokus pada keamanan data tim riset, dengan tujuan memastikan setiap izin mengikuti prinsip least privilege.
+
+Setiap file dan direktori diperiksa dan disesuaikan menggunakan perintah Linux seperti `ls -la` dan `chmod`. File tersembunyi dan direktori sensitif mendapat perhatian khusus agar tidak ada akses tidak sah yang bisa menimbulkan risiko kebocoran data.
+
+Hasilnya menunjukkan bahwa pengaturan izin yang tepat mampu meningkatkan keamanan sistem secara signifikan tanpa mengganggu alur kerja pengguna. Proyek ini memperlihatkan pemahaman praktis tentang access control, Linux permissions, dan pentingnya konfigurasi sistem dalam menjaga keamanan organisasi.
