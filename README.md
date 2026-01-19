@@ -169,7 +169,7 @@ Direktori `drafts` kini hanya dapat diakses oleh pemilik, sedangkan group dan ot
 
 ## 🧾 Final summary <a name="summary">
 
-Proyek ini mendokumentasikan pengalaman mengelola dan mengamankan izin file serta direktori menggunakan perintah Linux sebagai bagian dari praktik access control. Skenario yang digunakan menggambarkan lingkungan organisasi besar dengan tim riset internal, di mana saya meninjau izin yang sudah ada, menemukan akses yang tidak semestinya, lalu melakukan penyesuaian agar hanya pengguna berwenang yang dapat mengakses sistem.
+Proyek ini mendokumentasikan pengalaman mengelola dan mengamankan izin file serta direktori menggunakan perintah Linux sebagai bagian dari praktik access control. Skenario yang digunakan menggambarkan lingkungan organisasi besar dengan tim riset internal, di mana saya meninjau izin yang sudah ada, menemukan akses yang tidak semestinya, lalu melakukan penyesuaian supaya pengguna berwenang hanya yang dapat mengakses sistem.
 
 Proses berjalan dengan memeriksa file biasa, file tersembunyi, dan direktori yang bersifat sensitif agar selaras dengan kebijakan keamanan organisasi. Setiap perubahan dilakukan secara hati-hati melalui perintah Linux seperti `ls -la` dan `chmod`. Tujuannya jelas, yaitu menghapus akses tulis yang tidak sah dan membatasi akses direktori hanya untuk pemilik yang memiliki otoritas.
 
