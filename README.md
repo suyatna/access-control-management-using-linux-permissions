@@ -169,6 +169,8 @@ Direktori `drafts` kini hanya dapat diakses oleh pemilik, sedangkan group dan ot
 
 ## 💡 Project summary <a name="summary">
 
-Proyek ini menampilkan bagaimana kontrol akses di sistem operasi dapat diterapkan lewat pengelolaan izin file dan direktori di Linux. Skenario yang digunakan berfokus pada keamanan data tim riset, dengan tujuan memastikan setiap izin mengikuti prinsip least privilege. Setiap file dan direktori diperiksa dan disesuaikan menggunakan perintah Linux seperti `ls -la` dan `chmod`. File tersembunyi dan direktori sensitif mendapat perhatian khusus agar tidak ada akses tidak sah yang bisa menimbulkan risiko kebocoran data.
+Proyek ini menampilkan bagaimana kontrol akses di sistem operasi dapat diterapkan lewat pengelolaan izin file dan direktori di Linux. Skenario yang digunakan berfokus pada keamanan data tim riset, dengan tujuan memastikan setiap izin mengikuti prinsip least privilege.
+
+Setiap file dan direktori diperiksa dan disesuaikan menggunakan perintah Linux seperti `ls -la` dan `chmod`. File tersembunyi dan direktori sensitif mendapat perhatian khusus agar tidak ada akses tidak sah yang bisa menimbulkan risiko kebocoran data.
 
 Hasilnya menunjukkan bahwa pengaturan izin yang tepat mampu meningkatkan keamanan sistem secara signifikan tanpa mengganggu alur kerja pengguna. Proyek ini memperlihatkan pemahaman praktis tentang access control, Linux permissions, dan pentingnya konfigurasi sistem dalam menjaga keamanan organisasi.
