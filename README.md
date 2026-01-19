@@ -51,7 +51,7 @@ Hasil dari perintah `ls -l` atau `ls -la` menampilkan izin akses dalam bentuk st
 
 Format string perizinan ini mengikuti pola tertentu yang digunakan untuk membaca tipe objek serta hak baca, tulis, dan eksekusi. Pemahaman struktur ini menjadi dasar penting untuk menilai apakah izin yang diterapkan sudah aman atau masih membuka celah risiko keamanan.
 
-<img width="584" height="319" alt="Frame 1(3)" src="https://github.com/user-attachments/assets/2e6773d9-e509-46bc-8d90-fd9d22f189e7" />
+<img width="440" height="113" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/60e7020c-1284-476e-bd26-31e326281e4f" />
 
 ### a. Permission structure and symbol meaning
 
