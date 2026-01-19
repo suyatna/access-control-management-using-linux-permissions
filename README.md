@@ -39,7 +39,7 @@ Seluruh file dan direktori, termasuk file tersembunyi, ditampilkan menggunakan p
 
 <img width="640" height="165" alt="Screenshot 2026-01-19 at 01-57-49 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/ae5acb43-aa63-4a72-91a2-0788de81e2a0" />
 
-Perintah tersebut menampilkan daftar file secara lengkap beserta informasi izin, kepemilikan pengguna, grup, dan tipe objek. Opsi -l digunakan untuk melihat detail izin secara jelas. Output perintah kemudian ditelusuri satu per satu untuk menemukan potensi risiko, seperti file yang memiliki akses tulis bagi group atau other. Jenis akses ini tidak sesuai dengan kebijakan organisasi karena dapat membuka peluang perubahan data tanpa otorisasi.
+Perintah tersebut menampilkan daftar file secara lengkap beserta informasi izin, kepemilikan pengguna, grup, dan tipe objek. Opsi `-l` digunakan untuk melihat detail izin secara jelas. Output perintah kemudian ditelusuri satu per satu untuk menemukan potensi risiko, seperti file yang memiliki akses tulis bagi group atau other. Jenis akses ini tidak sesuai dengan kebijakan organisasi karena dapat membuka peluang perubahan data tanpa otorisasi.
 
 Temuan dari pemeriksaan ini menjadi dasar untuk langkah berikutnya, yaitu memahami struktur permission string dan menentukan file atau direktori yang perlu disesuaikan izinnya. Penyesuaian dilakukan agar akses hanya diberikan kepada pengguna yang benar-benar berwenang.
 
@@ -47,38 +47,70 @@ Temuan dari pemeriksaan ini menjadi dasar untuk langkah berikutnya, yaitu memaha
 
 ## 🧩 Understanding the permission string <a name="understanding">
 
-Hasil dari perintah ls -l atau ls -la menampilkan izin akses dalam bentuk string permission. Setiap karakter di dalam string tersebut memiliki makna khusus yang menjelaskan bagaimana sebuah file atau direktori dapat diakses oleh pemilik, grup, maupun pengguna lain.
+Hasil dari perintah `ls -l` atau `ls -la` menampilkan izin akses dalam bentuk string permission. Setiap karakter di dalam string tersebut memiliki makna khusus yang menjelaskan bagaimana sebuah file atau direktori dapat diakses oleh pemilik, grup, maupun pengguna lain.
 
 Format string perizinan ini mengikuti pola tertentu yang digunakan untuk membaca tipe objek serta hak baca, tulis, dan eksekusi. Pemahaman struktur ini menjadi dasar penting untuk menilai apakah izin yang diterapkan sudah aman atau masih membuka celah risiko keamanan.
 
-<img width="584" height="319" alt="Frame 1(2)" src="https://github.com/user-attachments/assets/4d0c51e6-e575-4053-815a-d99444d314d9" />
+<img width="584" height="319" alt="Frame 1(3)" src="https://github.com/user-attachments/assets/2e6773d9-e509-46bc-8d90-fd9d22f189e7" />
 
 ### a. Permission structure and symbol meaning
 
-Tabel berikut menjelaskan simbol yang muncul pada string permission serta fungsinya dalam sistem Linux. Setiap simbol membantu memahami tipe objek dan hak akses yang diberikan.
+Tabel berikut menjelaskan simbol yang muncul pada string permission serta fungsinya dalam sistem Linux. Setiap simbol membantu memahami tipe objek dan hak akses yang diberikan dan pemahaman simbol-simbol ini menjadi langkah awal untuk menilai apakah izin akses sudah sesuai dengan prinsip keamanan.
 
 |Simbol|Kategori|Arti|Penjelasan|
 |---|---|---|---|
-|d|Tipe objek|Direktori|Menunjukkan bahwa objek tersebut merupakan sebuah direktori|
-|-|Tipe objek|File biasa|Menandakan objek berupa file non-direktori|
-|r|Hak akses|Read|Memberikan izin membaca isi file atau melihat daftar isi direktori|
-|w|Hak akses|Write|Memberikan izin mengubah isi file atau menghapus file di dalam direktori|
-|x|Hak akses|Execute|Memberikan izin menjalankan file atau masuk ke dalam direktori|
-|-|Hak akses|No permission|Menunjukkan bahwa hak akses tertentu tidak diberikan|
-
-Pemahaman simbol-simbol ini menjadi langkah awal untuk menilai apakah izin akses sudah sesuai dengan prinsip keamanan.
+|`d`|Tipe objek|Direktori|Menunjukkan bahwa objek tersebut merupakan sebuah direktori|
+|`-`|Tipe objek|File biasa|Menandakan objek berupa file non-direktori|
+|`r`|Hak akses|Read|Memberikan izin membaca isi file atau melihat daftar isi direktori|
+|`w`|Hak akses|Write|Memberikan izin mengubah isi file atau menghapus file di dalam direktori|
+|`x`|Hak akses|Execute|Memberikan izin menjalankan file atau masuk ke dalam direktori|
+|`-`|Hak akses|No permission|Menunjukkan bahwa hak akses tertentu tidak diberikan|
 
 ### b. Permission details based on command output
 
-Tabel berikut merangkum hasil pembacaan permission pada beberapa file beserta implikasi keamanannya.
+Tabel berikut merangkum hasil pembacaan permission pada beberapa file beserta implikasi keamanannya. Pembacaan detail tersebut membantu menentukan file mana yang perlu diperketat izinnya supaya akses hanya diberikan kepada pihak yang benar-benar berwenang.
 
 |Nama objek|Tipe|Permission string|Penjelasan|
 |---|---|---|---|
-|project_k.txt|File|-rw-rw-rw-|Seluruh pengguna memiliki izin baca dan tulis. Konfigurasi ini berisiko tinggi karena siapa pun dapat mengubah isi file tanpa pembatasan.|
-|project_m.txt|File|-rw-r-----|Pemilik dapat membaca dan menulis, grup hanya dapat membaca, pengguna lain tidak memiliki akses. Pola ini sudah mendekati prinsip least privilege.|
-|project_r.txt|File|-rw-rw-r--|Grup masih memiliki izin tulis, sementara pengguna lain dapat membaca. Kondisi ini membuka peluang perubahan data oleh pihak yang tidak seharusnya.|
-|project_t.txt|File|-rw-rw-r--|Izin grup untuk menulis masih aktif dan menimbulkan risiko serupa, karena file tetap dapat dimodifikasi di luar kontrol pemilik.|
+|project_k.txt|File|`-rw-rw-rw-`|Seluruh pengguna memiliki izin baca dan tulis. Konfigurasi ini berisiko tinggi karena siapa pun dapat mengubah isi file tanpa pembatasan.|
+|project_m.txt|File|`-rw-r-----`|Pemilik dapat membaca dan menulis, grup hanya dapat membaca, pengguna lain tidak memiliki akses. Pola ini sudah mendekati prinsip least privilege.|
+|project_r.txt|File|`-rw-rw-r--`|Grup masih memiliki izin tulis, sementara pengguna lain dapat membaca. Kondisi ini membuka peluang perubahan data oleh pihak yang tidak seharusnya.|
+|project_t.txt|File|`-rw-rw-r--`|Izin grup untuk menulis masih aktif dan menimbulkan risiko serupa, karena file tetap dapat dimodifikasi di luar kontrol pemilik.|
 
-Pembacaan detail ini membantu menentukan file mana yang perlu diperketat izinnya agar akses hanya diberikan kepada pihak yang benar-benar berwenang.
+Hasil pemeriksaan menunjukkan adanya file dan direktori dengan izin akses yang terlalu terbuka, terutama karena hak tulis masih diberikan kepada group dan other. Kondisi ini menimbulkan risiko perubahan data oleh pihak yang tidak berwenang. Temuan tersebut menjadi acuan untuk tahap berikutnya, yaitu menyesuaikan izin menggunakan perintah Linux agar akses dibatasi hanya untuk pengguna yang memiliki otoritas sesuai kebijakan keamanan organisasi.
 
+## 🛠️ Modifying file permissions <a name="modify">
 
+Identifikasi file dengan izin yang tidak sesuai kebijakan keamanan menjadi titik awal untuk melakukan perbaikan akses. Fokus perbaikan diarahkan pada pembatasan izin agar hanya pengguna yang berwenang yang memiliki hak akses. Kebijakan organisasi menegaskan bahwa tidak satu pun file diperbolehkan memberikan akses tulis kepada group maupun other.
+
+Hasil pemeriksaan sebelumnya menunjukkan beberapa file masih memiliki izin tulis untuk group atau other. File-file inilah yang kemudian diprioritaskan untuk penyesuaian izin agar selaras dengan prinsip keamanan dan kontrol akses yang diterapkan organisasi.
+
+### a. Securing files with open access
+
+File project_k.txt memiliki izin `-rw-rw-rw-`, yang berarti seluruh pengguna dapat membaca dan menulis file tersebut. Konfigurasi ini tergolong berisiko karena membuka peluang perubahan data tanpa kontrol yang jelas.
+
+Akses tulis untuk group dan other dihapus menggunakan perintah berikut:
+
+<img width="640" height="186" alt="Screenshot 2026-01-19 at 01-59-39 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/c5fe95e3-224c-4830-b79d-f91423e14f42" />
+
+Perubahan ini membuat hanya pemilik file yang memiliki hak tulis, sementara group dan other dibatasi pada akses baca.
+
+### b. Restricting group write access
+
+File project_r.txt dan project_t.txt memiliki izin `-rw-rw-r--`, yang masih memperbolehkan group untuk menulis. Izin ini tidak sejalan dengan kebijakan keamanan karena memungkinkan modifikasi file oleh anggota group selain pemilik.
+
+Hak tulis pada group dihapus dengan perintah berikut:
+
+<img width="640" height="336" alt="Screenshot 2026-01-19 at 02-01-38 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/5d3399d2-fd34-46d2-b264-cba8c49b6668" />
+
+Penyesuaian ini memastikan hanya pemilik file yang dapat melakukan perubahan, sementara group dan other tetap dapat membaca sesuai kebutuhan operasional.
+
+### c. Preserving properly configured files
+
+File project_m.txt telah memiliki izin `-rw-r-----`, yang membatasi akses tulis hanya untuk pemilik dan memberikan akses baca kepada group. Konfigurasi ini sudah sesuai dengan kebijakan organisasi sehingga tidak memerlukan perubahan tambahan.
+
+### d. Permission hardening results
+
+Seluruh file proyek tidak lagi memiliki akses tulis untuk group maupun other setelah penyesuaian diterapkan. Kondisi ini mengurangi risiko perubahan data tanpa otorisasi dan memperkuat kontrol akses pada sistem berkas.
+
+Perbaikan perizinan ini menjadi landasan penting sebelum melanjutkan ke pengamanan file tersembunyi dan direktori yang memiliki tingkat sensitivitas lebih tinggi.
