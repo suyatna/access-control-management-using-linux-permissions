@@ -37,7 +37,7 @@ Proses pengamanan sistem dimulai dengan meninjau izin yang diterapkan pada setia
 
 Seluruh file dan direktori, termasuk file tersembunyi, ditampilkan menggunakan perintah Linux berikut:
 
-<img width="640" height="165" alt="Screenshot 2026-01-19 at 01-57-49 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/ae5acb43-aa63-4a72-91a2-0788de81e2a0" />
+<img width="640" height="175" alt="Screenshot 2026-01-20 at 02-36-58 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/f1f98f2a-7b88-4ae7-ba5c-715638473ea9" />
 
 Perintah tersebut menampilkan daftar file secara lengkap beserta informasi izin, kepemilikan pengguna, grup, dan tipe objek. Opsi `-l` digunakan untuk melihat detail izin secara jelas. Output perintah kemudian ditelusuri satu per satu untuk menemukan potensi risiko, seperti file yang memiliki akses tulis bagi group atau other. Jenis akses ini tidak sesuai dengan kebijakan organisasi karena dapat membuka peluang perubahan data tanpa otorisasi.
 
@@ -91,7 +91,7 @@ Hasil pemeriksaan sebelumnya menunjukkan beberapa file masih memiliki izin tulis
 
 File `project_k.txt` memiliki izin `-rw-rw-rw-`, yang berarti seluruh pengguna dapat membaca dan menulis file tersebut. Konfigurasi ini tergolong berisiko karena membuka peluang perubahan data tanpa kontrol yang jelas. Akses tulis untuk group dan other dihapus menggunakan perintah berikut:
 
-<img width="640" height="186" alt="Screenshot 2026-01-19 at 01-59-39 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/c5fe95e3-224c-4830-b79d-f91423e14f42" />
+<img width="640" height="186" alt="Screenshot 2026-01-20 at 02-39-00 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/77e53c0c-6659-4aa1-8072-ad541f660ede" />
 
 Perubahan ini membuat hanya pemilik file yang memiliki hak tulis, sementara group dan other dibatasi pada akses baca.
 
@@ -99,7 +99,7 @@ Perubahan ini membuat hanya pemilik file yang memiliki hak tulis, sementara grou
 
 File `project_r.txt` dan `project_t.txt` memiliki izin `-rw-rw-r--`, yang masih memperbolehkan group untuk menulis. Izin ini tidak sejalan dengan kebijakan keamanan karena memungkinkan modifikasi file oleh anggota group selain pemilik. Hak tulis pada group dihapus dengan perintah berikut:
 
-<img width="640" height="336" alt="Screenshot 2026-01-19 at 02-01-38 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/5d3399d2-fd34-46d2-b264-cba8c49b6668" />
+<img width="640" height="344" alt="Screenshot 2026-01-20 at 02-41-13 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/0b5e4589-b64b-4f3c-8b95-ea39fa877366" />
 
 Penyesuaian ini memastikan hanya pemilik file yang dapat melakukan perubahan, sementara group dan other tetap dapat membaca sesuai kebutuhan operasional.
 
@@ -117,7 +117,7 @@ File tersembunyi biasanya tidak terlihat dalam tampilan standar direktori, sehin
 
 Pada direktori proyek ini, file tersembunyi `.project_x.txt` memiliki pengaturan izin sebagai berikut:
 
-<img width="640" height="224" alt="Screenshot 2026-01-19 at 02-04-46 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/e2c590ae-af75-47a9-bfa4-1b0ac9e9ab8b" />
+<img width="640" height="234" alt="Screenshot 2026-01-20 at 02-41-53 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/fa08433e-0cbb-4d32-976c-21cb027d5320" />
 
 Konfigurasi ini menunjukkan pemilik file memiliki akses baca dan tulis, sedangkan group hanya memiliki hak tulis tanpa akses baca. Kondisi ini tidak sesuai kebijakan keamanan organisasi karena memungkinkan file diubah tanpa bisa dicek isinya, sehingga berpotensi menimbulkan manipulasi data.
 
@@ -130,7 +130,7 @@ Kebijakan organisasi mengatur file ini supaya:
 
 Penyesuaian dilakukan menggunakan perintah:
 
-<img width="640" height="449" alt="Screenshot 2026-01-19 at 02-08-12 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/945013d4-10c3-4ffe-ade1-60652c0c021d" />
+<img width="640" height="454" alt="Screenshot 2026-01-20 at 02-45-11 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/fd7c4c7a-bf1d-4f9b-b2a1-8746d5122ab1" />
 
 Perintah ini menghapus hak tulis group dan memastikan group hanya memiliki akses baca. Hak akses pemilik tetap utuh sesuai kebijakan.
 
@@ -151,15 +151,15 @@ Pengaturan izin pada direktori sama pentingnya dengan pengamanan file dalam menj
 
 Izin awal pada direktori ini adalah:
 
-<img width="640" height="224" alt="Screenshot 2026-01-19 at 02-04-46 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/02454a0d-67b4-4729-a33e-aa32ebd52b8e" />
+<img width="640" height="234" alt="Screenshot 2026-01-20 at 02-41-53 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/da6bab45-9cbd-40af-bce2-d764b7fd87b8" />
 
 Pengaturan ini memberi izin kepada group untuk masuk ke direktori, tetapi mereka tidak bisa melihat isi atau mengubah file di dalamnya. Akses terbatas seperti ini masih belum sesuai dengan kebijakan organisasi, karena hanya pemilik yang seharusnya bisa mengakses direktori beserta isinya.
 
 ### a. Restricting directory access
 
-Hanya pengguna `researcher2` yang seharusnya dapat mengakses direktori drafts. Izin execute untuk group dan other dihapus agar mereka tidak bisa masuk ke folder. Perintah yang digunakan untuk ini adalah:
+Hanya pengguna `researcher2` yang seharusnya dapat mengakses direktori `drafts`. Izin execute untuk group dan other dihapus agar mereka tidak bisa masuk ke folder. Perintah yang digunakan untuk ini adalah:
 
-<img width="640" height="428" alt="Screenshot 2026-01-19 at 02-15-02 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/339e7d9c-062f-4448-805d-2ae1c0f112df" />
+<img width="640" height="245" alt="Screenshot 2026-01-20 at 02-48-24 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/b652d89b-1ef4-4cca-beb0-32d03b854ebd" />
 
 ### b. Directory hardening results
 
