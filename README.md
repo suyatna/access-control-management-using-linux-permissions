@@ -72,12 +72,14 @@ Tabel berikut merangkum hasil pembacaan permission pada beberapa file beserta im
 
 |Nama objek|Tipe|Permission string|Penjelasan|
 |---|---|---|---|
-|project_k.txt|File|`-rw-rw-rw-`|Seluruh pengguna memiliki izin baca dan tulis. Konfigurasi ini berisiko tinggi karena siapa pun dapat mengubah isi file tanpa pembatasan.|
-|project_m.txt|File|`-rw-r-----`|Pemilik dapat membaca dan menulis, grup hanya dapat membaca, pengguna lain tidak memiliki akses. Pola ini sudah mendekati prinsip least privilege.|
-|project_r.txt|File|`-rw-rw-r--`|Grup masih memiliki izin tulis, sementara pengguna lain dapat membaca. Kondisi ini membuka peluang perubahan data oleh pihak yang tidak seharusnya.|
-|project_t.txt|File|`-rw-rw-r--`|Izin grup untuk menulis masih aktif dan menimbulkan risiko serupa, karena file tetap dapat dimodifikasi di luar kontrol pemilik.|
+|`project_k.txt`|File|`-rw-rw-rw-`|Seluruh pengguna memiliki izin baca dan tulis. Konfigurasi ini berisiko tinggi karena siapa pun dapat mengubah isi file tanpa pembatasan.|
+|`project_m.txt`|File|`-rw-r-----`|Pemilik dapat membaca dan menulis, grup hanya dapat membaca, pengguna lain tidak memiliki akses. Pola ini sudah mendekati prinsip least privilege.|
+|`project_r.txt`|File|`-rw-rw-r--`|Grup masih memiliki izin tulis, sementara pengguna lain dapat membaca. Kondisi ini membuka peluang perubahan data oleh pihak yang tidak seharusnya.|
+|`project_t.txt`|File|`-rw-rw-r--`|Izin grup untuk menulis masih aktif dan menimbulkan risiko serupa, karena file tetap dapat dimodifikasi di luar kontrol pemilik.|
 
 Hasil pemeriksaan menunjukkan adanya file dan direktori dengan izin akses yang terlalu terbuka, terutama karena hak tulis masih diberikan kepada group dan other. Kondisi ini menimbulkan risiko perubahan data oleh pihak yang tidak berwenang. Temuan tersebut menjadi acuan untuk tahap berikutnya, yaitu menyesuaikan izin menggunakan perintah Linux agar akses dibatasi hanya untuk pengguna yang memiliki otoritas sesuai kebijakan keamanan organisasi.
+
+---
 
 ## 🛠️ Modifying file permissions <a name="modify">
 
@@ -87,9 +89,7 @@ Hasil pemeriksaan sebelumnya menunjukkan beberapa file masih memiliki izin tulis
 
 ### a. Securing files with open access
 
-File project_k.txt memiliki izin `-rw-rw-rw-`, yang berarti seluruh pengguna dapat membaca dan menulis file tersebut. Konfigurasi ini tergolong berisiko karena membuka peluang perubahan data tanpa kontrol yang jelas.
-
-Akses tulis untuk group dan other dihapus menggunakan perintah berikut:
+File `project_k.txt` memiliki izin `-rw-rw-rw-`, yang berarti seluruh pengguna dapat membaca dan menulis file tersebut. Konfigurasi ini tergolong berisiko karena membuka peluang perubahan data tanpa kontrol yang jelas. Akses tulis untuk group dan other dihapus menggunakan perintah berikut:
 
 <img width="640" height="186" alt="Screenshot 2026-01-19 at 01-59-39 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/c5fe95e3-224c-4830-b79d-f91423e14f42" />
 
@@ -97,20 +97,14 @@ Perubahan ini membuat hanya pemilik file yang memiliki hak tulis, sementara grou
 
 ### b. Restricting group write access
 
-File project_r.txt dan project_t.txt memiliki izin `-rw-rw-r--`, yang masih memperbolehkan group untuk menulis. Izin ini tidak sejalan dengan kebijakan keamanan karena memungkinkan modifikasi file oleh anggota group selain pemilik.
-
-Hak tulis pada group dihapus dengan perintah berikut:
+File `project_r.txt` dan `project_t.txt` memiliki izin `-rw-rw-r--`, yang masih memperbolehkan group untuk menulis. Izin ini tidak sejalan dengan kebijakan keamanan karena memungkinkan modifikasi file oleh anggota group selain pemilik. Hak tulis pada group dihapus dengan perintah berikut:
 
 <img width="640" height="336" alt="Screenshot 2026-01-19 at 02-01-38 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/5d3399d2-fd34-46d2-b264-cba8c49b6668" />
 
 Penyesuaian ini memastikan hanya pemilik file yang dapat melakukan perubahan, sementara group dan other tetap dapat membaca sesuai kebutuhan operasional.
 
-### c. Preserving properly configured files
+### c. Preserving properly configured files and permission hardening results
 
-File project_m.txt telah memiliki izin `-rw-r-----`, yang membatasi akses tulis hanya untuk pemilik dan memberikan akses baca kepada group. Konfigurasi ini sudah sesuai dengan kebijakan organisasi sehingga tidak memerlukan perubahan tambahan.
+File `project_m.txt` sudah memiliki izin `-rw-r-----`, di mana hak tulis hanya dimiliki oleh pemilik dan group hanya diberikan akses baca. Konfigurasi ini sesuai dengan kebijakan keamanan organisasi sehingga tidak memerlukan perubahan lebih lanjut.
 
-### d. Permission hardening results
-
-Seluruh file proyek tidak lagi memiliki akses tulis untuk group maupun other setelah penyesuaian diterapkan. Kondisi ini mengurangi risiko perubahan data tanpa otorisasi dan memperkuat kontrol akses pada sistem berkas.
-
-Perbaikan perizinan ini menjadi landasan penting sebelum melanjutkan ke pengamanan file tersembunyi dan direktori yang memiliki tingkat sensitivitas lebih tinggi.
+Semua penyesuaian izin telah diterapkan, tidak ada lagi file proyek yang memberikan hak tulis kepada group atau other. Kondisi ini menurunkan risiko perubahan data tanpa otorisasi dan memperkuat kontrol akses di sistem berkas. Langkah hardening ini juga menjadi dasar sebelum mengamankan file tersembunyi dan direktori yang lebih sensitif.
