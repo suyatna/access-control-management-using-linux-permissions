@@ -108,3 +108,61 @@ Penyesuaian ini memastikan hanya pemilik file yang dapat melakukan perubahan, se
 File `project_m.txt` sudah memiliki izin `-rw-r-----`, di mana hak tulis hanya dimiliki oleh pemilik dan group hanya diberikan akses baca. Konfigurasi ini sesuai dengan kebijakan keamanan organisasi sehingga tidak memerlukan perubahan lebih lanjut.
 
 Semua penyesuaian izin telah diterapkan, tidak ada lagi file proyek yang memberikan hak tulis kepada group atau other. Kondisi ini menurunkan risiko perubahan data tanpa otorisasi dan memperkuat kontrol akses di sistem berkas. Langkah hardening ini juga menjadi dasar sebelum mengamankan file tersembunyi dan direktori yang lebih sensitif.
+
+---
+
+## 🕵️ Managing permissions on hidden files <a name="managing">
+
+File tersembunyi biasanya tidak terlihat dalam tampilan standar direktori, sehingga sering dianggap aman. Risiko tetap ada jika izin aksesnya tidak diatur dengan benar. Pemeriksaan dan pengelolaan izin pada file tersembunyi menjadi bagian penting dari pengamanan sistem.
+
+Pada direktori proyek ini, file tersembunyi `.project_x.txt` memiliki pengaturan izin sebagai berikut:
+
+<img width="640" height="224" alt="Screenshot 2026-01-19 at 02-04-46 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/e2c590ae-af75-47a9-bfa4-1b0ac9e9ab8b" />
+
+Konfigurasi ini menunjukkan pemilik file memiliki akses baca dan tulis, sedangkan group hanya memiliki hak tulis tanpa akses baca. Kondisi ini tidak sesuai kebijakan keamanan organisasi karena memungkinkan file diubah tanpa bisa dicek isinya, sehingga berpotensi menimbulkan manipulasi data.
+
+### a. Hidden file permission adjustment
+
+Kebijakan organisasi mengatur file ini supaya:
+- Hanya pemilik yang memiliki izin tulis
+- Pemilik dan group dapat membaca file
+- Other tidak memiliki akses sama sekali
+
+Penyesuaian dilakukan menggunakan perintah:
+
+<img width="640" height="449" alt="Screenshot 2026-01-19 at 02-08-12 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/945013d4-10c3-4ffe-ade1-60652c0c021d" />
+
+Perintah ini menghapus hak tulis group dan memastikan group hanya memiliki akses baca. Hak akses pemilik tetap utuh sesuai kebijakan.
+
+### b. Hidden file security results
+
+Perubahan yang diterapkan membuat file tersembunyi hanya dapat:
+- Dibaca dan diubah oleh pemilik
+- Dibaca oleh group
+- Tidak diakses oleh other
+
+Konfigurasi ini menjaga integritas file dan memastikan hanya pengguna berwenang yang dapat mengakses isinya, meskipun file tersembunyi. Langkah ini melengkapi penguatan kontrol akses sebelumnya sebelum dilanjutkan ke pengamanan direktori yang membatasi akses ke folder-folder sensitif.
+
+---
+
+## 📁 Securing directory access <a name="securing">
+
+Pengaturan izin pada direktori sama pentingnya dengan pengamanan file dalam menjaga keamanan sistem. Izin ini menentukan siapa yang bisa melihat isi folder sekaligus siapa yang bisa masuk dan mengakses file di dalamnya. Kesalahan konfigurasi bisa membuka akses tidak sah ke seluruh struktur direktori. Direktori proyek bernama drafts digunakan untuk menyimpan dokumen kerja yang sensitif dan hanya boleh diakses oleh pemiliknya, yaitu pengguna `researcher2`.
+
+Izin awal pada direktori ini adalah:
+
+<img width="640" height="224" alt="Screenshot 2026-01-19 at 02-04-46 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/02454a0d-67b4-4729-a33e-aa32ebd52b8e" />
+
+Pengaturan ini memberi izin kepada group untuk masuk ke direktori, tetapi mereka tidak bisa melihat isi atau mengubah file di dalamnya. Akses terbatas seperti ini masih belum sesuai dengan kebijakan organisasi, karena hanya pemilik yang seharusnya bisa mengakses direktori beserta isinya.
+
+### a. Restricting directory access
+
+Hanya pengguna `researcher2` yang seharusnya dapat mengakses direktori drafts. Izin execute untuk group dan other dihapus agar mereka tidak bisa masuk ke folder. Perintah yang digunakan untuk ini adalah:
+
+<img width="640" height="428" alt="Screenshot 2026-01-19 at 02-15-02 Activity Manage authorization Google Skills" src="https://github.com/user-attachments/assets/339e7d9c-062f-4448-805d-2ae1c0f112df" />
+
+### b. Directory hardening results
+
+Direktori `drafts` kini hanya dapat diakses oleh pemilik, sedangkan group dan other tidak memiliki izin masuk atau melihat isinya. Konfigurasi ini melindungi dokumen sensitif dari akses tidak sah dan memperkuat kontrol akses berbasis peran di sistem. Langkah pengamanan direktori ini melengkapi pengaturan izin pada file dan file tersembunyi, sehingga seluruh struktur proyek kini sesuai dengan kebijakan keamanan organisasi.
+
+---
