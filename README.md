@@ -9,7 +9,7 @@
 5. [Modifying file permissions](#modify)
 6. [Managing permissions on hidden files](#managing)
 7. [Securing directory access](#securing)
-8. [Project summary](#summary)
+8. [Final summary](#summary)
 
 ---
 
@@ -167,10 +167,10 @@ Direktori `drafts` kini hanya dapat diakses oleh pemilik, sedangkan group dan ot
 
 ---
 
-## 💡 Project summary <a name="summary">
+## 🧾 Final summary <a name="summary">
 
-Proyek ini menampilkan bagaimana kontrol akses di sistem operasi dapat diterapkan lewat pengelolaan izin file dan direktori di Linux. Skenario yang digunakan berfokus pada keamanan data tim riset, dengan tujuan memastikan setiap izin mengikuti prinsip least privilege.
+Proyek ini mendokumentasikan pengalaman mengelola dan mengamankan izin file serta direktori menggunakan perintah Linux sebagai bagian dari praktik access control. Skenario yang digunakan menggambarkan lingkungan organisasi besar dengan tim riset internal, di mana saya meninjau izin yang sudah ada, menemukan akses yang tidak semestinya, lalu melakukan penyesuaian agar hanya pengguna berwenang yang dapat mengakses sistem.
 
-Setiap file dan direktori diperiksa dan disesuaikan menggunakan perintah Linux seperti `ls -la` dan `chmod`. File tersembunyi dan direktori sensitif mendapat perhatian khusus agar tidak ada akses tidak sah yang bisa menimbulkan risiko kebocoran data.
+Proses berjalan dengan memeriksa file biasa, file tersembunyi, dan direktori yang bersifat sensitif agar selaras dengan kebijakan keamanan organisasi. Setiap perubahan dilakukan secara hati-hati melalui perintah Linux seperti `ls -la` dan `chmod`. Tujuannya jelas, yaitu menghapus akses tulis yang tidak sah dan membatasi akses direktori hanya untuk pemilik yang memiliki otoritas.
 
-Hasilnya menunjukkan bahwa pengaturan izin yang tepat mampu meningkatkan keamanan sistem secara signifikan tanpa mengganggu alur kerja pengguna. Proyek ini memperlihatkan pemahaman praktis tentang access control, Linux permissions, dan pentingnya konfigurasi sistem dalam menjaga keamanan organisasi.
+Hasil akhir menunjukkan bahwa kontrol akses berbasis permission file dapat diterapkan secara efektif untuk melindungi data sensitif dan mencegah penyalahgunaan akses. Pendekatan ini membantu memperkuat keamanan sistem secara menyeluruh. Proyek ini juga menegaskan pentingnya memahami permission string Linux agar praktik keamanan dapat dijalankan secara konsisten dan berkelanjutan.
