@@ -51,5 +51,34 @@ Hasil dari perintah ls -l atau ls -la menampilkan izin akses dalam bentuk string
 
 Format string perizinan ini mengikuti pola tertentu yang digunakan untuk membaca tipe objek serta hak baca, tulis, dan eksekusi. Pemahaman struktur ini menjadi dasar penting untuk menilai apakah izin yang diterapkan sudah aman atau masih membuka celah risiko keamanan.
 
+<img width="584" height="319" alt="Frame 1(2)" src="https://github.com/user-attachments/assets/4d0c51e6-e575-4053-815a-d99444d314d9" />
+
+### a. Permission structure and symbol meaning
+
+Tabel berikut menjelaskan simbol yang muncul pada string permission serta fungsinya dalam sistem Linux. Setiap simbol membantu memahami tipe objek dan hak akses yang diberikan.
+
+|Simbol|Kategori|Arti|Penjelasan|
+|---|---|---|---|
+|d|Tipe objek|Direktori|Menunjukkan bahwa objek tersebut merupakan sebuah direktori|
+|-|Tipe objek|File biasa|Menandakan objek berupa file non-direktori|
+|r|Hak akses|Read|Memberikan izin membaca isi file atau melihat daftar isi direktori|
+|w|Hak akses|Write|Memberikan izin mengubah isi file atau menghapus file di dalam direktori|
+|x|Hak akses|Execute|Memberikan izin menjalankan file atau masuk ke dalam direktori|
+|-|Hak akses|No permission|Menunjukkan bahwa hak akses tertentu tidak diberikan|
+
+Pemahaman simbol-simbol ini menjadi langkah awal untuk menilai apakah izin akses sudah sesuai dengan prinsip keamanan.
+
+### b. Permission details based on command output
+
+Tabel berikut merangkum hasil pembacaan permission pada beberapa file beserta implikasi keamanannya.
+
+|Nama objek|Tipe|Permission string|Penjelasan|
+|---|---|---|---|
+|project_k.txt|File|-rw-rw-rw-|Seluruh pengguna memiliki izin baca dan tulis. Konfigurasi ini berisiko tinggi karena siapa pun dapat mengubah isi file tanpa pembatasan.|
+|project_m.txt|File|-rw-r-----|Pemilik dapat membaca dan menulis, grup hanya dapat membaca, pengguna lain tidak memiliki akses. Pola ini sudah mendekati prinsip least privilege.|
+|project_r.txt|File|-rw-rw-r--|Grup masih memiliki izin tulis, sementara pengguna lain dapat membaca. Kondisi ini membuka peluang perubahan data oleh pihak yang tidak seharusnya.|
+|project_t.txt|File|-rw-rw-r--|Izin grup untuk menulis masih aktif dan menimbulkan risiko serupa, karena file tetap dapat dimodifikasi di luar kontrol pemilik.|
+
+Pembacaan detail ini membantu menentukan file mana yang perlu diperketat izinnya agar akses hanya diberikan kepada pihak yang benar-benar berwenang.
 
 
