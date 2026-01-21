@@ -167,7 +167,7 @@ Direktori `drafts` kini hanya dapat diakses oleh pemilik, sedangkan group dan ot
 
 ---
 
-## 🧾 Final summary <a name="summary">
+## 🏁 Final summary <a name="summary">
 
 Proyek ini mendokumentasikan pengalaman mengelola dan mengamankan izin file serta direktori menggunakan perintah Linux sebagai bagian dari praktik access control. Skenario yang digunakan menggambarkan lingkungan organisasi besar dengan tim riset internal, di mana saya meninjau izin yang sudah ada, menemukan akses yang tidak semestinya, lalu melakukan penyesuaian supaya pengguna berwenang hanya yang dapat mengakses sistem.
 
